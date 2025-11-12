@@ -21,10 +21,8 @@ KEY METHODS
 
 page.wait_for_selector('element_name')
     - This will pause your python code until playwright makes sure that the
-      specific element you are looking for has loaded. It probably isn't 
-      necessary to use when we are using books.toscrape.com, but especially
-      on other sites that might take more time to load things, it is good to get
-      into the practice of doing this.
+      specific element you are looking for has loaded. Not really necessary
+      for the type of scraping we're doing, but good to be aware of.
 
 page.go_back()
     - Exactly like clicking the back button in your browser. Will go to the
@@ -57,10 +55,7 @@ with sync_playwright() as p:
         book_div = all_div_image_containers.nth(index)
         # go to the page of the specific book
         book_div.click()
-        # just for safety, wait until the data you want on the page has loaded
-        # for a site like this, this probably isn't necessary, but on other
-        # more interactive websites, this can really help
-        page.wait_for_selector('h1')
+
         title = page.locator('h1').first.text_content()
         price = page.locator("p[class='price_color']").first.text_content()
         description = page.locator("div[id='product_description'] + p").text_content()
@@ -69,9 +64,19 @@ with sync_playwright() as p:
         book_info_list.append(book_info_dict)
 
         page.go_back()
-        page.wait_for_selector("div[class='image_container']")
         # select it again since we changed pages
         all_div_image_containers = page.locator("div[class='image_container']")
 
 df = pd.DataFrame(book_info_list)
 df.to_excel("book_data.xlsx")
+
+
+'''
+# just for safety, wait until the data you want on the page has loaded
+# for a site like this, this probably isn't necessary, but on other
+# more interactive websites, this can really help
+page.wait_for_selector('h1')
+
+page.wait_for_selector("div[class='image_container']")
+
+'''

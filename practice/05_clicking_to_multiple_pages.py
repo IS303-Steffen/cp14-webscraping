@@ -21,10 +21,8 @@ KEY METHODS
 
 page.wait_for_selector('element_name')
     - This will pause your python code until playwright makes sure that the
-      specific element you are looking for has loaded. It probably isn't 
-      necessary to use when we are using books.toscrape.com, but especially
-      on other sites that might take more time to load things, it is good to get
-      into the practice of doing this.
+      specific element you are looking for has loaded. Not really necessary
+      for the type of scraping we're doing, but good to be aware of.
 
 page.go_back()
     - Exactly like clicking the back button in your browser. Will go to the
